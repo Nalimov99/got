@@ -14,25 +14,53 @@ export default class GotService {
         return await res.json();
     }
 
-    _transformChar(promise) {
+    getKey = (url) => {
+        return url.split('/')[url.split('/').length - 1]
+    }
+
+    _transformChar = (promise) => {
         return {
             name: promise.name,
             born: promise.born,
             died: promise.died,
             culture: promise.culture,
             gender: promise.gender,
+            url: promise.url,
+            key: this.getKey(promise.url)
+        }
+    }
+
+    _transformHouse = (promise) => {
+        return {
+            name: promise.name,
+            key: this.getKey(promise.url),
+            region: promise.region,
+            founded: promise.founded,
+            founder: promise.founder,
+            currentLord: promise.currentLord,
             url: promise.url
         }
     }
 
-
-
-    getAllBooks() {
-        return this.getResource(`/books/`);
+    _transformBooks = (promise) => {
+        return {
+            name: promise.name,
+            url: promise.url,
+            publisher: promise.publisher,
+            released: promise.released,
+            numberOfPages: promise.numberOfPages,
+            key: this.getKey(promise.url)
+        }
     }
-    
-    getBook(id) {
-        return this.getResource(`/books/${id}/`);
+
+    getBook = async (id) => {
+        const res = await this.getResource(`/books/${id}`);
+        return this._transformBooks(res);
+    }
+
+    getAllBooks = async () => {
+        const res = await this.getResource(`/books/`);
+        return await res.map(this._transformBooks)
     }
     
     getAllCharacters = async () => {
@@ -40,16 +68,17 @@ export default class GotService {
         return await res.map(this._transformChar)
     }
     
-    async getCharacter (id) {
+    getCharacter = async (id) => {
+        if(!id) {
+            return id;
+        }
         const res = await this.getResource(`/characters/${id}`);
         return this._transformChar(res);
     }
     
-    getAllHouses() {
-        return this.getResource(`/houses/`);
+    getAllHouses = async() => {
+        const res =  await this.getResource(`/houses/`);
+        return await res.map(this._transformHouse)
     }
-    
-    getHouse(id) {
-        return this.getResource(`/houses/${id}/`);
-    }
+
 }

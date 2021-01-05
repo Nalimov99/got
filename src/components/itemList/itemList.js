@@ -18,7 +18,7 @@ export default class ItemList extends Component {
     initChars = () => {
         this.props.getData()
         .then(res => {
-            this.setState({itemList: res.map(this.props.transformChars), loading: false, error: false})
+            this.setState({itemList: res, loading: false, error: false})
         })
         .catch(res => {
             this.setState({loading: false, error: true, erMsg: res.message})
@@ -27,7 +27,7 @@ export default class ItemList extends Component {
 
 
 
-    renderItems(arr) {
+    renderItems = (arr) => {
         return arr.map((item) => {
             return (
                 <li className="list-group-item"

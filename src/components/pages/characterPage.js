@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemList from '../itemList';
-import {CharDetails, Field} from '../charDetails/charDetails';
+import {ItemDetails, Field} from '../itemDetails/itemDetails';
 import ErrorBlock from '../errorBlock/errorBlock'
 import RowBlock from '../rowBlock/rowBlock'
 
@@ -23,15 +23,6 @@ export default class characterPage extends React.Component {
         this.setState({selectedChar})
     }
 
-    transformAllCharacters = (char) => {
-        return {
-            name: char.name,
-            key: char.url.split('/')[char.url.split('/').length - 1],
-            gender: char.gender,
-            born: char.born,
-            culture: char.culture
-        }
-    }
 
     
     render() {
@@ -41,16 +32,15 @@ export default class characterPage extends React.Component {
         const {selectedChar} = this.state;
         const itemList = (
             <ItemList  onItemSelected={this.onCharSelected} 
-            getData={this.props.getData} 
-            transformChars = {this.transformAllCharacters}/>
+            getData={this.props.getData}/>
         )
         const charDetails = (
-            <CharDetails selectedChar={selectedChar}>
+            <ItemDetails selectedItem={selectedChar}>
                 <Field label="Gender" field="gender"/>
                 <Field label="Born" field="born"/>
                 <Field label="Died" field="died"/>
                 <Field label="Culture" field="culture"/>
-            </CharDetails>
+            </ItemDetails>
         )
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './errorBlock.css';
 
-const ErrorBlock = ({message, onErrorRefresh}) => {
+const ErrorBlock = ({message = "component error", onErrorRefresh}) => {
     return (
         <>
             <div className='error-circle' onClick ={onErrorRefresh}>

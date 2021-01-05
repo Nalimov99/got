@@ -1,29 +1,30 @@
 import React, {Component} from 'react';
 import transformEmptyString from "../transfromEmptyString/transformEmptyString"
-import './charDetails.css';
+import './itemDetails.css';
 
-const Field = ({selectedChar, field, label}) => {
+const Field = ({selectedItem, field, label}) => {
     return (
         <li className="list-group-item d-flex justify-content-between">
             <span className="term">{label}</span>
-            <span>{transformEmptyString(selectedChar[field])}</span>
+            <span>{transformEmptyString(selectedItem[field])}</span>
         </li>
     )
 }
 
 
-class CharDetails extends Component {
+class ItemDetails extends Component {
 
     render() {
-        const {name} = this.props.selectedChar
-        const {selectedChar} = this.props;
+        const {selectedItem} = this.props;
+        const {name} = selectedItem;
+        
         return (
-            <div className="char-details rounded">
+            <div className="item-details rounded">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
                     {
                         React.Children.map(this.props.children, (child) => {
-                           return React.cloneElement(child, {selectedChar})
+                           return React.cloneElement(child, {selectedItem})
                         })
                     }
                 </ul>
@@ -32,4 +33,4 @@ class CharDetails extends Component {
     }
 }
 
-export {CharDetails, Field}
+export {ItemDetails, Field}

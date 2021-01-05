@@ -1,3 +1,9 @@
+.app {
+    min-height: 100vh;
+}
+
+
+
 .toggle-button {
     padding: 12px;
     background-color: #000da1;
